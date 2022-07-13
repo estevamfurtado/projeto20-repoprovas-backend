@@ -1,0 +1,45 @@
+{
+    "name": "projeto18-valex",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.ts",
+    "scripts": {
+        "build": "tsc",
+        "start": "node build/index.js",
+        "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@faker-js/faker": "^7.3.0",
+        "@prisma/client": "^4.0.0",
+        "@types/cors": "^2.8.12",
+        "@types/express": "^4.17.13",
+        "axios": "^0.27.2",
+        "bcrypt": "^5.0.1",
+        "chalk": "^4.1.2",
+        "cors": "^2.8.5",
+        "cryptr": "^6.0.3",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "express-async-errors": "^3.1.1",
+        "joi": "^17.6.0",
+        "jsonwebtoken": "^8.5.1",
+        "sanitize-html": "^2.7.0",
+        "pg": "^8.7.3",
+        "ts-node-dev": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/axios": "^0.14.0",
+        "@types/bcrypt": "^5.0.0",
+        "@types/cryptr": "^4.0.1",
+        "@types/joi": "^17.2.3",
+        "@types/pg": "^8.6.5",
+        "nodemon": "^2.0.16",
+        "prettier": "^2.7.0",
+        "prisma": "^4.0.0",
+        "ts-node": "^10.8.2",
+        "typescript": "^4.7.4"
+    }
+}
