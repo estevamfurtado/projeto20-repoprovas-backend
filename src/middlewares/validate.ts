@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { joiSchemas } from "../models/joi";
 import { AppError } from "../utils/errors/AppError";
 import Joi from "joi";
+import { chalkLogger } from "../utils/chalkLogger";
+
 
 function validateJoiSchemaFromLocals(locals: any, joiSchema: Joi.AnySchema) {
     
@@ -9,7 +11,6 @@ function validateJoiSchemaFromLocals(locals: any, joiSchema: Joi.AnySchema) {
     const keys = Object.keys(joiSchema.describe().keys);
 
     keys.forEach(key => {
-        // check if is required
         if (joiSchema.describe().keys[key].presence === 'required') {
             if (locals[key] === undefined) {
                 throw new AppError(400, `${key} is required`);
@@ -27,13 +28,12 @@ function validateJoiSchemaFromLocals(locals: any, joiSchema: Joi.AnySchema) {
 }
 
 
-function validate (joiSchema: Joi.AnySchema) {
+function joiSchema (joiSchema: Joi.AnySchema) {
     return (req: Request, res: Response, next: NextFunction) => {
+        chalkLogger.log('middleware', 'Validating request data with joi schema');
         validateJoiSchemaFromLocals(res.locals, joiSchema);
         next();
     }
 }
 
-export const joiSchema = {
-    validate
-}
+export {joiSchema}

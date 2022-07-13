@@ -7,20 +7,20 @@ dotenv.config();
 const secretKey = process.env.JWT_SECRET ?? 'JWT_SECRET';
 
 
-export async function signUp (password: string, email: string) {
+async function signUp (password: string, email: string) {
     const newUser = await userService.createOrCrash({password, email});
     const token = createToken(newUser);
     return token;
 }
 
-export async function signIn (password: string, email: string) {
+async function signIn (password: string, email: string) {
     const user = await userService.findByEmailOrCrash(email);
     await userService.validatePasswordOrCrash(password, user);
     const token = createToken(user);
     return token;
 }
 
-export async function validateTokenOrCrash (token: string) {
+async function validateTokenOrCrash (token: string) {
     const decoded = decodeToken(token);
     if (!decoded) {
         throw new AppError(400, 'Invalid token');
@@ -40,3 +40,5 @@ function decodeToken (token: string) {
     const decoded = jwt.verify(token, secretKey);
     return decoded;
 }
+
+export { signUp, signIn, validateTokenOrCrash };

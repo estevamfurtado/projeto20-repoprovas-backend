@@ -8,13 +8,13 @@ const router = Router();
 router.post('/sign-up',
     mws.help.logRoute('Sign-up'),
     mws.set.localsFromRequestData,
-    mws.check.joiSchema.validate(joiSchemas.User.SignUp),
+    mws.validate.joiSchema(joiSchemas.User.SignUp),
     cts.auth.signUp,
 )
 router.post('/sign-in',
     mws.help.logRoute('Sign-in'),
     mws.set.localsFromRequestData,
-    mws.check.joiSchema.validate(joiSchemas.User.SignIn),
+    mws.validate.joiSchema(joiSchemas.User.SignIn),
     cts.auth.signIn,
 )
 

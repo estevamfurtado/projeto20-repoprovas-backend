@@ -1,7 +1,7 @@
 import * as help from "./help/test";
 import * as set from "./set";
-import * as check from "./check";
+import * as validate from "./validate";
+import * as auth from "./auth";
 
 
-
-export {help, set, check}
+export {help, validate, set, auth}
