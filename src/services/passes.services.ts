@@ -97,7 +97,26 @@ function formatPassesObject(passes: any, typeUtil: TypeUtil) {
     return array.map((pass) => {return formatPass(pass, typeUtil)});
 }
 
-// -------------------------
+function formatTypesCounter(typesPassesCounter: any){
+    const counter = typesUtils.map((typeUtil) => {
+        const type = typeUtil.type;
+        const count = 0;
+        return {type, count};
+    });
+    const keys = Object.keys(typesPassesCounter);
+    keys.forEach((key) => {
+        const type = typesPassesCounter[key].type;
+        const value = typesPassesCounter[key]._count._all;
+        counter.forEach((c) => {
+            if (c.type === type) {
+                c.count = value;
+            }
+        });
+    });
+    return counter;
+}
+
+
 
 export async function insert (data: any) {
     const typeUtil = getTypeUtilOrCrash(data.type);
@@ -159,25 +178,6 @@ export async function getTypesCounter (userId: number) {
         },
     })
     return formatTypesCounter(typesPassesCounter);
-}
-
-function formatTypesCounter(typesPassesCounter: any){
-    const counter = typesUtils.map((typeUtil) => {
-        const type = typeUtil.type;
-        const count = 0;
-        return {type, count};
-    });
-    const keys = Object.keys(typesPassesCounter);
-    keys.forEach((key) => {
-        const type = typesPassesCounter[key].type;
-        const value = typesPassesCounter[key]._count._all;
-        counter.forEach((c) => {
-            if (c.type === type) {
-                c.count = value;
-            }
-        });
-    });
-    return counter;
 }
 
 export async function findByType (userId: number, type: string) {
