@@ -127,7 +127,7 @@ export async function updateById (passId: number, userId:number, data: any) {
 }
 
 export async function getAll (userId: number) {
-    const passes = await client.passes.groupBy({
+    const typesPassesCounter = await client.passes.groupBy({
         by: ['type'],
         where: {
             userId: {
@@ -138,7 +138,18 @@ export async function getAll (userId: number) {
             _all: true,
         },
     })
-    return passes;
+    return formatTypesPassesCounter(typesPassesCounter);
+}
+
+function formatTypesPassesCounter(typesPassesCounter: any){
+    const types = {wifi: 0, card: 0, credential: 0, note: 0};
+    const keys = Object.keys(typesPassesCounter);
+    keys.forEach((key) => {
+        const type = typesPassesCounter[key].type;
+        const value = typesPassesCounter[key]._count._all;
+        types[type as keyof typeof types] = value;
+    });
+    return types;
 }
 
 export async function getByType (userId: number, type: string) {
@@ -157,7 +168,6 @@ export async function getByType (userId: number, type: string) {
     })
     return formatPassesObject(passes);
 }
-
 
 
 export function validateInsertData (insertData: any) {
