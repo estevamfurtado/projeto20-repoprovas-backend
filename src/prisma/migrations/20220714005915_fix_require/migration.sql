@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Passes" ALTER COLUMN "password" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Users" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

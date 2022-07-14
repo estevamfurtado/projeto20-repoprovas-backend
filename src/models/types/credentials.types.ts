@@ -7,5 +7,5 @@ export interface Credential {
     login: string;
     password: string;
 }
-export type InsertData = Omit<Credential, "id">;
-export type UpdateData = Partial<Credential>;
+export type NewCredential = Omit<Credential, "id">;
+export type UpdateCredential = Partial<Credential>;

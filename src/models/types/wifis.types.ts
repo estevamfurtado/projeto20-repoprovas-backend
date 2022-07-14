@@ -5,5 +5,5 @@ export interface Wifi {
     network: string;
     password: string;
 }
-export type InsertData = Omit<Wifi, "id">;
-export type UpdateData = Partial<Wifi>;
+export type NewWifi = Omit<Wifi, "id">;
+export type UpdateWifi = Partial<Wifi>;

@@ -6,5 +6,5 @@ export interface Note {
     title: string;
     content: string;
 }
-export type NotesInsertData = Omit<Note, "id">;
-export type NotesUpdateData = Partial<Note>;
+export type NewNote = Omit<Note, "id">;
+export type UpdateNote = Partial<Note>;

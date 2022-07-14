@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { AppError } from "../utils/errors/AppError";
-import * as userService from './users';
+import * as userService from './users.services';
 
 dotenv.config();
 const secretKey = process.env.JWT_SECRET ?? 'JWT_SECRET';
@@ -20,7 +20,7 @@ async function signIn (password: string, email: string) {
     return token;
 }
 
-async function validateTokenOrCrash (token: string) {
+function validateTokenOrCrash (token: string) {
     const decoded = decodeToken(token);
     if (!decoded) {
         throw new AppError(400, 'Invalid token');
@@ -30,15 +30,19 @@ async function validateTokenOrCrash (token: string) {
 
 
 function createToken (saveData: any) {
-    const data = {saveData};
+    const data = {...saveData};
     const config = { expiresIn: '1h' };
     const token = jwt.sign(data, secretKey, config);
     return token;
 }
 
 function decodeToken (token: string) {
-    const decoded = jwt.verify(token, secretKey);
-    return decoded;
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        return decoded;
+    } catch (e) {
+        throw new AppError(400, 'Invalid token');
+    }
 }
 
 export { signUp, signIn, validateTokenOrCrash };

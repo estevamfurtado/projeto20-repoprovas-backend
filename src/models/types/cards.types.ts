@@ -8,6 +8,7 @@ export interface Card {
     expiry : string;
     userId: number;
     password: string;
+    cardType: string;
 }
-export type InsertData = Omit<Card, "id">;
-export type UpdateData = Partial<Card>;
+export type NewCard = Omit<Card, "id">;
+export type UpdateCard = Partial<Card>;
