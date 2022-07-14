@@ -12,6 +12,7 @@ const NewCard = Joi.object().keys({
     expiry : Joi.string().min(3).max(30).required(),
     password: Joi.string().min(3).max(30).required(),
     cardType: Joi.string().valid('both', 'debit', 'credit').required(),
+    isVirtual: Joi.boolean().required(),
 } as const)
 
 const UpdateCard = Joi.object().keys({
@@ -23,6 +24,7 @@ const UpdateCard = Joi.object().keys({
     expiry : Joi.string().min(3).max(30),
     password: Joi.string().min(3).max(30),
     cardType: Joi.string().valid('both', 'debit', 'credit'),
+    isVirtual: Joi.boolean(),
 } as const)
 
 // Credentials

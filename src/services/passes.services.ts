@@ -21,7 +21,7 @@ export interface TypeUtil {
 const typesUtils: TypeUtil[] = [
     {   type: 'card', 
         cryptedColumns: ['cvv', 'password'],
-        outputColumns: ['id', 'createdAt', 'title', 'name', 'number', 'expiry', 'cardType', 'cvv', 'password'],
+        outputColumns: ['id', 'createdAt', 'title', 'name', 'number', 'expiry', 'cardType', 'cvv', 'password', 'isVirtual'],
         joi: {new: joiSchemas.Passes.new.card, update: joiSchemas.Passes.update.card}},
     {   type: 'wifi',
         cryptedColumns: ['password'],
@@ -61,14 +61,6 @@ function decryptKeys(data: any, keys: string[]) {
             data[key] = crypt.cryptr.decrypt(data[key]);
         }
     });
-    return data;
-}
-
-function validateData(data: any, joiSchema: Joi.AnySchema) {
-    const {error} = joiSchema.validate(data);
-    if (error) {
-        throw new AppError(400, error.message);
-    }
     return data;
 }
 
@@ -117,10 +109,9 @@ function formatTypesCounter(typesPassesCounter: any){
 }
 
 
-
 export async function insert (data: any) {
     const typeUtil = getTypeUtilOrCrash(data.type);
-    const dataToInsert = validateData(data, typeUtil.joi.new);
+    const dataToInsert = validateJoiSchemaFromObjectOrCrash(data, typeUtil.joi.new);
     const cryptedData = cryptKeys(dataToInsert, typeUtil.cryptedColumns);
     const pass = await client.passes.create({data: cryptedData});
     return formatPass(pass, typeUtil);
@@ -159,7 +150,7 @@ export async function updateById (passId: number, userId:number, data: any) {
         throw new AppError(404, 'Pass not found');
     }
     const typeUtil = getTypeUtilOrCrash(pass.type);
-    const dataToUpdate = validateData(data, typeUtil.joi.update);
+    const dataToUpdate = validateJoiSchemaFromObjectOrCrash(data, typeUtil.joi.update);
     const clearedData = clearData(dataToUpdate, typeUtil);
     const updatedPass = await client.passes.update({data: clearedData, where: {id: passId}});
     return formatPass(updatedPass, typeUtil);

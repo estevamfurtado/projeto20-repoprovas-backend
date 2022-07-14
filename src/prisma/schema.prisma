@@ -32,4 +32,5 @@ model Passes {
   content   String?
   network   String?
   cardType  String?
+  isVirtual Boolean? @default(false)
 }
