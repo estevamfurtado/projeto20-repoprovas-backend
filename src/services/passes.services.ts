@@ -5,6 +5,7 @@ import {crypt} from '../utils/crypt';
 import { chalkLogger } from '../utils/chalkLogger';
 import { validateJoiSchemaFromObjectOrCrash } from '../utils/joiUtils';
 import Joi from 'joi';
+import { Passes } from '../models/types/pass.types';
 
 
 export interface TypeUtil {
@@ -118,7 +119,7 @@ export async function insert (data: any) {
     await checkIfTitleExistsForTypeOrCrash(type as string, title as string);
     const dataToInsert = validateJoiSchemaFromObjectOrCrash(data, typeUtil.joi.new);
     const cryptedData = cryptKeys(dataToInsert, typeUtil.cryptedColumns);
-    const pass = await client.passes.create({data: cryptedData});
+    const pass = await client.passes.create({data: cryptedData}) as Passes;
     return formatPass(pass, typeUtil);
 }
 
@@ -143,14 +144,14 @@ export async function findById(passId: number, userId: number) {
                 equals: passId
             }
         },
-    })
+    });
 
     if (!pass || pass.userId !== userId) {
         throw new AppError(404, 'Pass not found');
     }
 
     const typeUtil = getTypeUtilOrCrash(pass.type);
-    return formatPass(pass, typeUtil);
+    return formatPass(pass as Passes, typeUtil);
 }
 
 export async function deleteById(passId: number, userId: number) {
@@ -172,7 +173,7 @@ export async function updateById (passId: number, userId:number, data: any) {
     const dataToUpdate = validateJoiSchemaFromObjectOrCrash(data, typeUtil.joi.update);
     const clearedData = clearData(dataToUpdate, typeUtil);
     const updatedPass = await client.passes.update({data: clearedData, where: {id: passId}});
-    return formatPass(updatedPass, typeUtil);
+    return formatPass(updatedPass as Passes, typeUtil);
 }
 
 export async function getTypesCounter (userId: number) {
