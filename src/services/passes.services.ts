@@ -29,7 +29,7 @@ const typesUtils: TypeUtil[] = [
         joi: {new: joiSchemas.Passes.new.wifi, update: joiSchemas.Passes.update.wifi}},
     {   type: 'credential',
         cryptedColumns: ['password'],
-        outputColumns: ['id', 'type', 'createdAt', 'title', 'login', 'password'],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'url', 'login', 'password'],
         joi: {new: joiSchemas.Passes.new.credential, update: joiSchemas.Passes.update.credential}},
     {   type: 'note',
         cryptedColumns: [],
@@ -114,12 +114,28 @@ function formatTypesCounter(typesPassesCounter: any){
 
 
 export async function insert (data: any) {
-    const typeUtil = getTypeUtilOrCrash(data.type);
+    const {type, title} = data;
+    const typeUtil = getTypeUtilOrCrash(type);
+    await checkIfTitleExistsForTypeOrCrash(type as string, title as string);
     const dataToInsert = validateJoiSchemaFromObjectOrCrash(data, typeUtil.joi.new);
     const cryptedData = cryptKeys(dataToInsert, typeUtil.cryptedColumns);
     const pass = await client.passes.create({data: cryptedData});
     return formatPass(pass, typeUtil);
 }
+
+export async function checkIfTitleExistsForTypeOrCrash(title: string, type: string) {
+    const typeUtil = getTypeUtilOrCrash(type);
+    const pass = await client.passes.findFirst({
+        where: {
+            title: title,
+            type: type
+        }
+    });
+    if (pass) {
+        throw new AppError(400, `Pass with title ${title} already exists`);
+    }
+}
+
 
 export async function findById(passId: number, userId: number) {
     const pass = await client.passes.findFirst({

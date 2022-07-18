@@ -16,9 +16,9 @@ model Users {
 }
 
 model Passes {
-  id                 Int       @id @default(autoincrement())
-  createdAt          DateTime  @default(now())
-  user               Users     @relation(fields: [userId], references: [id])
+  id                 Int      @id @default(autoincrement())
+  createdAt          DateTime @default(now())
+  user               Users    @relation(fields: [userId], references: [id])
   userId             Int
   type               String
   title              String
@@ -32,10 +32,10 @@ model Passes {
   content            String?
   network            String?
   cardType           String?
-  isVirtual          Boolean?  @default(false)
+  isVirtual          Boolean? @default(false)
   fullName           String?
-  emissionDate       DateTime?
-  expirationDate     DateTime?
+  emissionDate       String?
+  expirationDate     String?
   registrationNumber String?
   issuer             String?
   documentType       String?
