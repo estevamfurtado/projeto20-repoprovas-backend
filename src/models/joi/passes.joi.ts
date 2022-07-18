@@ -1,7 +1,5 @@
 import Joi from "joi"
 
-
-
 // Cards -> ok
 
 const NewCard = Joi.object().keys({
@@ -99,8 +97,8 @@ const UpdateDocument = Joi.object().keys({
     passId: Joi.number().min(0).required(),
     title: Joi.string().min(3).max(30),
     fullName: Joi.string().min(3).max(30),
-    emissionDate: Joi.string().min(3).max(30),
-    expirationDate: Joi.string().min(3).max(30),
+    emissionDate: Joi.date(),
+    expirationDate: Joi.date(),
     registrationNumber: Joi.string().min(3).max(30),
     issuer: Joi.string().min(3).max(30),
     documentType: Joi.string().valid('CPF', 'RG'),
