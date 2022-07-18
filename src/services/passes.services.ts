@@ -4,7 +4,6 @@ import { AppError } from '../utils/errors/AppError';
 import {crypt} from '../utils/crypt';
 import { chalkLogger } from '../utils/chalkLogger';
 import { validateJoiSchemaFromObjectOrCrash } from '../utils/joiUtils';
-import { Passes } from '@prisma/client';
 import Joi from 'joi';
 
 
