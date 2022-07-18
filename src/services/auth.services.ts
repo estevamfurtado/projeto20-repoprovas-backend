@@ -23,7 +23,7 @@ async function signIn (password: string, email: string) {
 function validateTokenOrCrash (token: string) {
     const decoded = decodeToken(token);
     if (!decoded) {
-        throw new AppError(400, 'Invalid token');
+        throw new AppError(401, 'Invalid token');
     }
     return decoded;
 }
@@ -41,7 +41,7 @@ function decodeToken (token: string) {
         const decoded = jwt.verify(token, secretKey);
         return decoded;
     } catch (e) {
-        throw new AppError(400, 'Invalid token');
+        throw new AppError(401, 'Invalid token');
     }
 }
 

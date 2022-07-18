@@ -77,17 +77,46 @@ const UpdateWifi = Joi.object().keys({
     password: Joi.string().min(3).max(30),
 } as const)
 
+// DOCUMENTS
+
+const NewDocument = Joi.object().keys({
+    type: Joi.string().valid('document').required(),
+    userId: Joi.number().min(0).required(),
+    title: Joi.string().min(3).max(30).required(),
+    fullName: Joi.string().min(3).max(30).required(),
+    emissionDate: Joi.string().min(3).max(30).required(),
+    expirationDate: Joi.string().min(3).max(30).required(),
+    registrationNumber: Joi.string().min(3).max(30).required(),
+    issuer: Joi.string().min(3).max(30).required(),
+    documentType: Joi.string().valid('CPF', 'RG').required(),
+} as const)
+
+const UpdateDocument = Joi.object().keys({
+    passId: Joi.number().min(0).required(),
+    title: Joi.string().min(3).max(30),
+    fullName: Joi.string().min(3).max(30),
+    emissionDate: Joi.string().min(3).max(30),
+    expirationDate: Joi.string().min(3).max(30),
+    registrationNumber: Joi.string().min(3).max(30),
+    issuer: Joi.string().min(3).max(30),
+    documentType: Joi.string().valid('CPF', 'RG'),
+} as const)
+
+// ALL
+
 export const passesJoiSchemas = { 
     new: {
         card: NewCard,
         credential: NewCredential,
         note: NewNote,
         wifi: NewWifi,
+        document: NewDocument,
     }
     , update: {
         card: UpdateCard,
         credential: UpdateCredential,
         note: UpdateNote,
         wifi: UpdateWifi,
+        document: UpdateDocument,
     }
 }

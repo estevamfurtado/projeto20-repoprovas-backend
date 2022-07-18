@@ -21,20 +21,24 @@ export interface TypeUtil {
 const typesUtils: TypeUtil[] = [
     {   type: 'card', 
         cryptedColumns: ['cvv', 'password'],
-        outputColumns: ['id', 'createdAt', 'title', 'name', 'number', 'expiry', 'cardType', 'cvv', 'password', 'isVirtual'],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'name', 'number', 'expiry', 'cardType', 'cvv', 'password', 'isVirtual'],
         joi: {new: joiSchemas.Passes.new.card, update: joiSchemas.Passes.update.card}},
     {   type: 'wifi',
         cryptedColumns: ['password'],
-        outputColumns: ['id', 'createdAt', 'title', 'network', 'password'],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'network', 'password'],
         joi: {new: joiSchemas.Passes.new.wifi, update: joiSchemas.Passes.update.wifi}},
     {   type: 'credential',
         cryptedColumns: ['password'],
-        outputColumns: ['id', 'createdAt', 'title', 'login', 'password'],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'login', 'password'],
         joi: {new: joiSchemas.Passes.new.credential, update: joiSchemas.Passes.update.credential}},
     {   type: 'note',
         cryptedColumns: [],
-        outputColumns: ['id', 'createdAt', 'title', 'content'],
-        joi: {new: joiSchemas.Passes.new.note, update: joiSchemas.Passes.update.note}}
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'content'],
+        joi: {new: joiSchemas.Passes.new.note, update: joiSchemas.Passes.update.note}},
+    {   type: 'document',
+        cryptedColumns: [],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'fullName', 'emissionDate', 'expirationDate', 'issuer', 'documentType', 'registrationNumber'],
+        joi: {new: joiSchemas.Passes.new.document, update: joiSchemas.Passes.update.document}}
 ];
 
 function getTypeUtilOrCrash (type: string) {
