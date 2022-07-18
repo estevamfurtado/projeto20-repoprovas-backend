@@ -37,7 +37,7 @@ const typesUtils: TypeUtil[] = [
         joi: {new: joiSchemas.Passes.new.note, update: joiSchemas.Passes.update.note}},
     {   type: 'document',
         cryptedColumns: [],
-        outputColumns: ['id', 'type', 'createdAt', 'title', 'fullName', 'emissionDate', 'expirationDate', 'issuer', 'documentType', 'registrationNumber'],
+        outputColumns: ['id', 'type', 'createdAt', 'title', 'documentType', 'fullName', 'emissionDate', 'expirationDate', 'issuer', 'registrationNumber'],
         joi: {new: joiSchemas.Passes.new.document, update: joiSchemas.Passes.update.document}}
 ];
 
