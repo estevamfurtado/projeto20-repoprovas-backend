@@ -6,6 +6,7 @@ const types = {
     middleware: chalk.bold.magenta('  [Middleware]'),
     controller: chalk.bold.blueBright('[Controller]'),
     service: chalk.bold.magenta('    [Service]'),
+    repository: chalk.bold.magenta('      [Repository]'),
     db: chalk.bold.blue('      [db]'),
     api: chalk.bold.blue('      [API]'),
     log: chalk.bold.gray.italic('[Log]'),

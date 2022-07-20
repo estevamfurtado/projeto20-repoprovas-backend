@@ -1,7 +1,8 @@
-import * as User from './users.joi';
-import { passesJoiSchemas } from './passes.joi';
+import * as users from './users.joi';
+import * as tests from './tests.joi';
 
 export const joiSchemas = {
-    User,
-    Passes: passesJoiSchemas
+    users, tests
 }
+
+export default joiSchemas;

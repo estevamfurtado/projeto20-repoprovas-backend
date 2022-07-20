@@ -5,6 +5,7 @@ import router from "./routers/index";
 import errorHandlingMiddleware from "./utils/errorHandlerMiddleware";
 
 const app = express();
+
 app.use(cors());
 app.use(json());
 

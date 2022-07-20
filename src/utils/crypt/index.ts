@@ -1,7 +1,9 @@
 import Cryptr from "cryptr"
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import { AppError } from "../errors/AppError";
 
+const secretKey = process.env.JWT_SECRET ?? 'JWT_SECRET';
 const cryptrSecret = process.env.JWT_SECRET ?? 'JWT_SECRET';
 const cryptr = new Cryptr(cryptrSecret);
 
@@ -15,6 +17,22 @@ function decryptCryptr (value: string) {
 } 
 
 
+function createToken (saveData: any) {
+    const data = {...saveData};
+    const config = { expiresIn: '1h' };
+    const token = jwt.sign(data, secretKey, config);
+    return token;
+}
+
+function decodeToken (token: string) {
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        return decoded;
+    } catch (e) {
+        throw new AppError(401, 'Invalid token');
+    }
+}
+
 function encryptBcrypt (value: string) {
     const encryptedPassword = bcrypt.hashSync(value, bcrypt.genSaltSync(8));
     return encryptedPassword;
@@ -26,5 +44,6 @@ function compareBcrypt (value: string, encryptedValue: string) {
 
 export const crypt = {
     cryptr: {encrypt: encryptCryptr, decrypt: decryptCryptr},
-    bcrypt: {encrypt: encryptBcrypt, compare: compareBcrypt}
+    bcrypt: {encrypt: encryptBcrypt, compare: compareBcrypt},
+    jwt: {create: createToken, decode: decodeToken},
 }

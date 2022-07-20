@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+}
+
+model Term {
+  id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  number      Int
+  disciplines Discipline[]
+}
+
+model Discipline {
+  id         Int                    @id @default(autoincrement())
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+  name       String                 @unique
+  term       Term                   @relation(fields: [termId], references: [id])
+  termId     Int
+  categories CategoryOnDiscipline[]
+  teachers   DisciplineOnTeacher[]
+  tests      Test[]
+}
+
+model Teacher {
+  id          Int                   @id @default(autoincrement())
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  name        String
+  categories  CategoryOnTeacher[]
+  disciplines DisciplineOnTeacher[]
+  tests       Test[]
+}
+
+model Category {
+  id          Int                    @id @default(autoincrement())
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  name        String
+  disciplines CategoryOnDiscipline[]
+  teachers    CategoryOnTeacher[]
+  tests       Test[]
+}
+
+model Test {
+  id                   Int                  @id @default(autoincrement())
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  name                 String
+  pdfUrl               String
+  categoryId           Int
+  disciplineId         Int
+  teacherId            Int
+  category             Category             @relation(fields: [categoryId], references: [id])
+  discipline           Discipline           @relation(fields: [disciplineId], references: [id])
+  teacher              Teacher              @relation(fields: [teacherId], references: [id])
+  CategoryOnDiscipline CategoryOnDiscipline @relation(fields: [categoryId, disciplineId], references: [categoryId, disciplineId])
+  CategoryOnTeacher    CategoryOnTeacher    @relation(fields: [categoryId, teacherId], references: [categoryId, teacherId])
+  DisciplineOnTeacher  DisciplineOnTeacher  @relation(fields: [disciplineId, teacherId], references: [disciplineId, teacherId])
+}
+
+// CATEGORY, DISCIPLINE, TEACHER
+
+model CategoryOnDiscipline {
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  categoryId   Int
+  disciplineId Int
+  category     Category   @relation(fields: [categoryId], references: [id])
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  Test         Test[]
+
+  @@id([categoryId, disciplineId])
+}
+
+model CategoryOnTeacher {
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  categoryId Int
+  teacherId  Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  teacher    Teacher  @relation(fields: [teacherId], references: [id])
+  Test       Test[]
+
+  @@id([categoryId, teacherId])
+}
+
+model DisciplineOnTeacher {
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  disciplineId Int
+  teacherId    Int
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  teacher      Teacher    @relation(fields: [teacherId], references: [id])
+  Test         Test[]
+
+  @@id([disciplineId, teacherId])
+}

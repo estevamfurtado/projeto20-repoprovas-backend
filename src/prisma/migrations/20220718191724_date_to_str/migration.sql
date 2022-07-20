@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Passes" ALTER COLUMN "emissionDate" SET DATA TYPE TEXT,
-ALTER COLUMN "expirationDate" SET DATA TYPE TEXT;

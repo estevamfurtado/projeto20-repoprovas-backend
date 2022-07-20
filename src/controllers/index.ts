@@ -1,5 +1,5 @@
 import * as auth from "./auth.controllers";
-import * as passes from "./passes.controllers";
+import * as tests from "./tests.controllers";
 
 
-export {auth, passes}
+export {auth, tests}

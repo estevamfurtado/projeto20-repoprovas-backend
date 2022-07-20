@@ -1,44 +1,27 @@
-import * as UserTypes from '../models/types/users.types'
-import { client } from "../database";
+import {GetUser, User, UserCreateInput} from '../models/types';
+import * as repos from '../repositories';
 import { AppError } from '../utils/errors/AppError';
 import {crypt} from '../utils/crypt';
 
 
-// Primitive
 
-export async function create (user: UserTypes.UserInsertData) {
-    const encryptedPassword = crypt.bcrypt.encrypt(user.password);
-    const newUserData = {...user, password: encryptedPassword};
-    const newUser = await client.users.create({data: newUserData});
+export async function createOrCrash (newUserData: UserCreateInput): Promise<User> {
+    const user = await repos.user.findByEmail(newUserData.email);
+    if (user) {throw new AppError(400, 'User already exists');}
+    const newUser = await repos.user.create(newUserData);
     return newUser;
 }
 
-export async function findByEmail (email: string) {
-    const user = await client.users.findUnique({where: {email}});
-    return user;
-}
-
-// Complex
-
-export async function createOrCrash (newUserData: UserTypes.UserInsertData) {
-    const user = await findByEmail(newUserData.email);
-    if (user) {
-        throw new AppError(400, 'User already exists');
-    }
-    const newUser = await create(newUserData);
-    return newUser;
-}
-
-export async function findByEmailOrCrash (email: string) {
-    const user = await findByEmail(email);
+export async function findByEmailOrCrash (email: string): Promise<GetUser | null> {
+    const user = await repos.user.findByEmail(email);
     if (!user) {
         throw new AppError(400, 'User does not exist');
     }
     return user;
 }
 
-export async function validatePasswordOrCrash (password: string, user: UserTypes.User) {
-    const isValid = crypt.bcrypt.compare(password, user.password);
+export async function validatePasswordOrCrash (password: string, userPassword: string): Promise<boolean> {
+    const isValid = crypt.bcrypt.compare(password, userPassword);
     if (!isValid) {
         throw new AppError(400, 'Wrong password');
     }
