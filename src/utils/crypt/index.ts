@@ -1,7 +1,7 @@
 import Cryptr from "cryptr"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { AppError } from "../errors/AppError";
+import { AppError } from "../errors/AppError.js";
 
 const secretKey = process.env.JWT_SECRET ?? 'JWT_SECRET';
 const cryptrSecret = process.env.JWT_SECRET ?? 'JWT_SECRET';

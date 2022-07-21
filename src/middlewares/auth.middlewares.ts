@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { GetUser } from "../models/types";
-import * as authService from "../services/auth.services";
-import { chalkLogger } from "../utils/chalkLogger";
-import { AppError } from "../utils/errors/AppError";
+import { GetUser } from "../models/types/index.js";
+import * as authService from "../services/auth.services.js";
+import { chalkLogger } from "../utils/chalkLogger.js";
+import { AppError } from "../utils/errors/AppError.js";
 
 async function validateToken (req: Request, res: Response, next: NextFunction) {
     chalkLogger.log('middleware', 'Validating token');

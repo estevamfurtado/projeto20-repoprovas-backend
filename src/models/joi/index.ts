@@ -1,5 +1,5 @@
-import * as users from './users.joi';
-import * as tests from './tests.joi';
+import * as users from './users.joi.js';
+import * as tests from './tests.joi.js';
 
 export const joiSchemas = {
     users, tests

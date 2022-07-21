@@ -17,12 +17,12 @@ const types = {
 
 
 function log (type: any, message: string) {
-    console.log(`${types[type as keyof typeof types]} ${message}`);
+    // console.log(`${types[type as keyof typeof types]} ${message}`);
 }
 
 function logObject (type: any, obj: object) {
-    console.log(`${types[type as keyof typeof types]}`);
-    console.log(obj);
+    // console.log(`${types[type as keyof typeof types]}`);
+    // console.log(obj);
 }
 
 export const chalkLogger = {

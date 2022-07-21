@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { chalkLogger } from "../utils/chalkLogger";
+import { chalkLogger } from "../utils/chalkLogger.js";
 
 export function localsFromRequestData(req: Request, res: Response, next: NextFunction) {
     chalkLogger.log('middleware', 'Saving request data to locals');

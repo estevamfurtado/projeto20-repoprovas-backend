@@ -1,20 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "outDir": "build",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "typeRoots": [
-      "./src/@types"
-    ]
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "dist"
   },
-  "include": [
-    "src",
-    "@types" ]
+  "ts-node": {
+    "esm": true
+  }
 }

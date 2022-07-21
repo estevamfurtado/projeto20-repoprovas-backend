@@ -1,7 +1,7 @@
 import { Router } from "express";
-import * as mws from "../middlewares";
-import * as cts from "../controllers";
-import joi from "../models/joi";
+import * as mws from "../middlewares/index.js";
+import * as cts from "../controllers/index.js";
+import joi from "../models/joi/index.js";
 
 const router = Router();
 

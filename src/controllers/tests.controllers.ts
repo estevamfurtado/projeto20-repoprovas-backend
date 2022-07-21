@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { chalkLogger } from "../utils/chalkLogger";
-import * as services from '../services';
+import { chalkLogger } from "../utils/chalkLogger.js";
+import * as services from '../services/index.js';
 
 async function create (req: Request, res: Response) {
     chalkLogger.log('middleware', 'Saving test');

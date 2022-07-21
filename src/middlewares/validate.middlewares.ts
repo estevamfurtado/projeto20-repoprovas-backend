@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import joi from "../models/joi";
-import { AppError } from "../utils/errors/AppError";
 import Joi from "joi";
-import { chalkLogger } from "../utils/chalkLogger";
-import { validateJoiSchemaFromObjectOrCrash } from "../utils/joiUtils";
+import { chalkLogger } from "../utils/chalkLogger.js";
+import { validateJoiSchemaFromObjectOrCrash } from "../utils/joiUtils.js";
 
 
 export function joiSchema (joi: Joi.AnySchema) {

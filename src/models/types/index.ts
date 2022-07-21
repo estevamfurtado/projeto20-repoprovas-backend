@@ -1,4 +1,4 @@
-import { Prisma, User, Test, Category, Teacher, Discipline, CategoryOnDisciplineOnTeacher } from '@prisma/client';
+import { Prisma, User, Test, Category, Teacher, Discipline } from '@prisma/client';
 
 type UserCreateInput = Prisma.UserCreateInput;
 
@@ -28,6 +28,5 @@ export {
     Category, 
     Teacher,
     Discipline,
-    CategoryOnDisciplineOnTeacher,
     CategoryOnDisciplineOnTeacherCreateInput
 };

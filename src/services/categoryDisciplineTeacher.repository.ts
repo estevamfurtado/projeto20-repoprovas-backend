@@ -1,8 +1,8 @@
-import * as disciplineService from './disciplines.services';
-import * as teacherService from './teachers.services';
-import * as categoryService from './categories.services';
-import * as repos from '../repositories';
-import { chalkLogger } from "../utils/chalkLogger";
+import * as disciplineService from './disciplines.services.js';
+import * as teacherService from './teachers.services.js';
+import * as categoryService from './categories.services.js';
+import * as repos from '../repositories/index.js';
+import { chalkLogger } from "../utils/chalkLogger.js";
 
 
 export async function validateIdsOrCrash (categoryId: number, disciplineId: number, teacherId: number) : Promise<void> {

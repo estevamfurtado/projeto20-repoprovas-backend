@@ -1,6 +1,6 @@
-import { AppError } from "../utils/errors/AppError";
+import { AppError } from "../utils/errors/AppError.js";
 import Joi from "joi";
-import { chalkLogger } from "./chalkLogger";
+import { chalkLogger } from "./chalkLogger.js";
 
 
 function validateJoiSchemaFromObjectOrCrash(object: any, joiSchema: Joi.AnySchema) {

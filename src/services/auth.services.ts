@@ -1,11 +1,14 @@
 import dotenv from 'dotenv';
-import { AppError } from "../utils/errors/AppError";
-import * as userService from './users.services';
-import * as repos from '../repositories';
-import {crypt} from '../utils/crypt';
+import { AppError } from "../utils/errors/AppError.js";
+import * as userService from './users.services.js';
+import * as repos from '../repositories/index.js';
+import {crypt} from '../utils/crypt/index.js';
 
 
-async function signUp (password: string, email: string) {
+async function signUp (password: string, confirmPassword: string, email: string) {
+    if (password !== confirmPassword) {
+        throw new AppError(400, 'Passwords do not match');
+    }
     const newUser = await userService.createOrCrash({password, email});
     const token = crypt.jwt.create(newUser);
     return token;

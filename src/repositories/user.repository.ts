@@ -1,6 +1,6 @@
-import { UserCreateInput, User, GetUser } from '../models/types';
-import prisma from '../prisma';
-import { crypt } from '../utils/crypt';
+import { UserCreateInput, User, GetUser } from '../models/types/index.js';
+import prisma from '../prisma/index.js';
+import { crypt } from '../utils/crypt/index.js';
 
 
 export async function create(data: UserCreateInput): Promise<User> {

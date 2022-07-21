@@ -1,4 +1,4 @@
-import prisma from "../prisma"
+import prisma from "../prisma/index.js"
 import { CategoryOnTeacher } from "@prisma/client";
 
 

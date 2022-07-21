@@ -1,6 +1,6 @@
-import prisma from "../prisma";
-import {TestCreateInput, Test} from "../models/types";
-import { chalkLogger } from "../utils/chalkLogger";
+import prisma from "../prisma/index.js";
+import {TestCreateInput, Test} from "../models/types/index.js";
+import { chalkLogger } from "../utils/chalkLogger.js";
 
 export async function create(data: TestCreateInput): Promise<Test> {
     chalkLogger.log('repository', 'Creating test')
