@@ -17,10 +17,9 @@ export async function getByTerms() {
         select: {id: true, number: true,
             disciplines: { select: {id: true, name: true,
                 categories: {select: {
-                    category: {select: {id: true, name: true, 
-                        tests: {select: {id: true, name: true, pdfUrl: true,
-                            teacher: {select: {name: true}}
-                        }}
+                    category: {select: {id: true, name: true}},
+                    tests: {select: {id: true, name: true, pdfUrl: true,
+                        teacher: {select: {name: true}}
                     }}
                 }}
             }}
@@ -34,10 +33,9 @@ export async function getByTeacher() {
     const data = await prisma.teacher.findMany({
         select: {id: true, name: true,
             categories: { select: {
-                category: {select: {id: true, name: true, 
-                    tests: {select: {id: true, name: true, pdfUrl: true,
-                        discipline: {select: {name: true}}
-                    }}
+                category: {select: {id: true, name: true,}},
+                tests: {select: {id: true, name: true, pdfUrl: true,
+                    discipline: {select: {name: true}}
                 }}
             }}
         }

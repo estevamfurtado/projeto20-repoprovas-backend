@@ -84,7 +84,7 @@ model CategoryOnDiscipline {
   disciplineId Int
   category     Category   @relation(fields: [categoryId], references: [id])
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
-  Test         Test[]
+  tests        Test[]
 
   @@id([categoryId, disciplineId])
 }
@@ -96,7 +96,7 @@ model CategoryOnTeacher {
   teacherId  Int
   category   Category @relation(fields: [categoryId], references: [id])
   teacher    Teacher  @relation(fields: [teacherId], references: [id])
-  Test       Test[]
+  tests      Test[]
 
   @@id([categoryId, teacherId])
 }
@@ -108,7 +108,7 @@ model DisciplineOnTeacher {
   teacherId    Int
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
   teacher      Teacher    @relation(fields: [teacherId], references: [id])
-  Test         Test[]
+  tests        Test[]
 
   @@id([disciplineId, teacherId])
 }
