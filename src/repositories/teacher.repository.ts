@@ -13,3 +13,8 @@ export async function create (name: string) : Promise<Teacher> {
     });
     return result;
 }
+
+export async function getAll () : Promise<Teacher[]> {
+    const result = await prisma.teacher.findMany();
+    return result;
+}

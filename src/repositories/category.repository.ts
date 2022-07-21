@@ -13,3 +13,8 @@ export async function create (name: string) : Promise<Category> {
     });
     return result;
 }
+
+export async function getAll () : Promise<Category[]> {
+    const result = await prisma.category.findMany();
+    return result;
+}

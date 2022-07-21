@@ -2,6 +2,15 @@ import { Request, Response } from "express";
 import { chalkLogger } from "../utils/chalkLogger.js";
 import * as services from '../services/index.js';
 
+
+
+async function getOptionsToCreate (req: Request, res: Response) {
+    chalkLogger.log('middleware', 'Getting data to create test');
+    const dataToCreate = await services.tests.getOptionsToCreate();
+    chalkLogger.log('controller', 'Got data to create test');
+    res.status(200).json({dataToCreate});
+}
+
 async function create (req: Request, res: Response) {
     chalkLogger.log('middleware', 'Saving test');
     const {name, pdfUrl, teacherId, disciplineId, categoryId} = res.locals;
@@ -24,4 +33,4 @@ async function getByTeachers (req: Request, res: Response) {
     res.status(200).json({testsByTeachers});
 }
 
-export {create, getByTerms, getByTeachers};
+export {create, getByTerms, getByTeachers, getOptionsToCreate};

@@ -13,6 +13,13 @@ router.post('/',
     cts.tests.create
 )
 
+router.get('/create/options', 
+    mws.help.logRoute('Get data to create new test'),
+    mws.set.localsFromRequestData,
+    mws.auth.validateToken,
+    cts.tests.getOptionsToCreate
+)
+
 // get all passes -> OK
 router.get('/by-disciplines', 
     mws.help.logRoute('Get tests by disciplines'),
