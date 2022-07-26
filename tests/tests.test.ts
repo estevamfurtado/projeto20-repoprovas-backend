@@ -134,6 +134,30 @@ describe('Get tests formatted by teachers', () => {
     })
 })
 
+describe('Get options for create new test', () => {
+    // 401 -> no token
+    it ('should return a status 401 when no token is provided', async () => {
+        const response = await supertest(app)
+            .get('/tests/create/options')
+        expect(response.status).toBe(401);
+    });
+    // 403 -> wrong token
+    it ('should return a status 403 when wrong token is provided', async () => {
+        const token = await factory.user.createUserAndToken();
+        const response = await supertest(app)
+            .get('/tests/create/options')
+            .set('Authorization', `Bearer wrong${token}`);
+    });
+    // 200 -> ok
+    it ('should return a status 200 when ok', async () => {
+        const token = await factory.user.createUserAndToken();
+        const response = await supertest(app)
+            .get('/tests/create/options')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.status).toBe(200);
+    })
+})
+
 afterAll(async () => {
     await prisma.$disconnect();
 });
