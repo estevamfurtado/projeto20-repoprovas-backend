@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "build": "tsc",
-        "start": "node build/index.js",
+        "start": "node dist/app.js",
         "dev": "nodemon src/index.ts",
         "test": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i"
     },
